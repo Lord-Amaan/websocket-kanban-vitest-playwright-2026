@@ -96,10 +96,12 @@ io.on('connection', (socket) => {
 socket.on('task:create', async (taskData) => {
   try {
     let attachments = [];
+if (Array.isArray(taskData.attachments)) {
+  attachments = taskData.attachments.map(att =>
+    typeof att === 'string' ? att : att.url
+  );
+}
 
-    if (Array.isArray(taskData.attachments)) {
-      attachments = taskData.attachments;
-    }
 
     const newTask = new Task({
       id: uuidv4(),
@@ -125,8 +127,7 @@ socket.on('task:create', async (taskData) => {
   }
 });
 
-
-  socket.on('task:update', async (updateData) => {
+socket.on('task:update', async (updateData) => {
   try {
     if (!updateData || !updateData.id) {
       socket.emit('error', { message: 'Invalid task data' });
@@ -147,10 +148,12 @@ socket.on('task:create', async (taskData) => {
     task.priority = updateData.priority ?? task.priority;
     task.category = updateData.category ?? task.category;
 
-    // ---- Attachments (VERY IMPORTANT FIX) ----
+    // ---- FIXED ATTACHMENTS HANDLING ----
     if (updateData.attachments !== undefined) {
       if (Array.isArray(updateData.attachments)) {
-        task.attachments = updateData.attachments;
+        task.attachments = updateData.attachments.map(att =>
+          typeof att === 'string' ? att : att.url
+        );
       } else {
         console.warn("Attachments received as non-array. Ignored.");
       }
