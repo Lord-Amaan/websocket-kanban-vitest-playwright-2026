@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
-const SOCKET_URL = 'http://localhost:3002';
+const SOCKET_URL = 'https://websocket-kanban-vitest-playwright-2026-wpss.onrender.com';
 
 export const useWebSocket = () => {
   const [socket, setSocket] = useState(null);
