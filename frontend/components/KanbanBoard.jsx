@@ -260,7 +260,7 @@ export const KanbanBoard = () => {
 
               </button>
 
-              <button
+              {/* <button
                 onClick={() => setShowColumnForm(!showColumnForm)}
                 style={{
                   padding: '12px 24px',
@@ -275,7 +275,7 @@ export const KanbanBoard = () => {
                 }}
               >
                 {showColumnForm ? 'Cancel' : 'Create Column'}
-              </button>
+              </button> */}
 
               <button
                 onClick={() => setShowNewTaskForm(!showNewTaskForm)}

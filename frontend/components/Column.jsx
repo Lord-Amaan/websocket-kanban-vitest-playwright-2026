@@ -9,9 +9,11 @@ export const Column = ({ title, status, color, tasks, onUpdate, onDelete, onMove
   const [editTitle, setEditTitle] = useState(title);
   const [showMenu, setShowMenu] = useState(false);
 
+  // ✅ FIXED: Added dependency array and proper config
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'TASK',
     drop: (item) => {
+      console.log('🎯 Dropping task:', item.id, 'into column:', status);
       if (item.status !== status) {
         onMove(item.id, status);
       }
@@ -19,7 +21,7 @@ export const Column = ({ title, status, color, tasks, onUpdate, onDelete, onMove
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
-  }));
+  }), [status, onMove]); // ✅ Added dependencies
 
   const columnTasks = tasks.filter((task) => task.status === status);
 
