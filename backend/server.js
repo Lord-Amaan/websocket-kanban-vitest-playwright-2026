@@ -12,11 +12,12 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-// Configure CORS
 app.use(cors());
 app.use(express.json());
 
-// Socket.IO setup with CORS
+app.get('/',(req,res)=>{
+  res.send("Backend is Live Access the Kanban from here : <a href='https://websocket-kanban-vitest-playwright-self.vercel.app/'>Kanban</a>")
+})
 const io = new Server(server, {
   cors: {
     origin: "*",
