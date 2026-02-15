@@ -19,11 +19,12 @@ app.use(express.json());
 // Socket.IO setup with CORS
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:5174"], // Vite default and fallback ports
+    origin: "*",
     methods: ["GET", "POST"]
   },
-  maxHttpBufferSize: 50 * 1024 * 1024 // 50MB to support large image attachments
+  maxHttpBufferSize: 50 * 1024 * 1024
 });
+
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/kanban-board')
